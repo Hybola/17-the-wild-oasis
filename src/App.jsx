@@ -13,8 +13,8 @@ import AppLayout from "./ui/AppLayout";
 function App() {
   return (
     <>
+      <GlobalStyles />
       <BrowserRouter>
-        <GlobalStyles />
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="dashboard" />} />
