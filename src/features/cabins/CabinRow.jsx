@@ -42,7 +42,7 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const { image, name, maxCapacity, regularPrice, discount } = cabin;
   return (
-    <TableRow>
+    <TableRow role="row">
       <Img src={image} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
