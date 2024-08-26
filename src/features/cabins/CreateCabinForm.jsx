@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
@@ -13,7 +11,9 @@ import FormRow from "./FormRow";
 
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
+  // errors needs to be with s, otherwise it won't work
   const { errors } = formState;
+
   const queryClient = useQueryClient();
   const { isLoading: isCreating, mutate } = useMutation({
     mutationFn: createCabin,
@@ -28,10 +28,12 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate(data);
+    // console.log(data);
+    mutate({ ...data, image: data.image[0] });
   }
   function onError(error) {
-    console.log(error);
+    //this function doens't do anything
+    // console.log(error);
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -105,12 +107,16 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow label="Cabin photo">
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          {...register("image", { required: "This input field is required" })}
+        />
       </FormRow>
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button $variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isCreating}>Add cabin</Button>
