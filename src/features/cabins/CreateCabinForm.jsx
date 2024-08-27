@@ -47,7 +47,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   function onSubmit(data) {
     // if the image is a file, image has to be index 0 of the fileList array
     const image = typeof data.image === "string" ? data.image : data.image[0];
-    console.log("image==>>> " + image);
+    // console.log("image==>>> " + image);
     if (isEditSession)
       editCabin({ newCabinData: { ...data, image }, id: editId });
     else createCabin({ ...data, image: image });

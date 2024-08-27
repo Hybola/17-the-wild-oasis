@@ -47,12 +47,20 @@ export async function createEditCabin(newCabin, id) {
   return data;
 }
 
-export async function deleteCabin(id) {
+export async function deleteCabin(id, imageUrl) {
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
 
   if (error) {
     console.log(error);
     throw new Error("Cabins could not be deleted");
   }
+  const { error: imageError } = await supabase.storage
+    .from("cabin-images")
+    .remove([imageUrl]);
+  if (imageError) {
+    console.log(imageError);
+    throw new Error("Cabin deleted, but unable to delete its image");
+  }
+
   return data;
 }

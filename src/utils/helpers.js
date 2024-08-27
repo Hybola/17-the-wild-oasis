@@ -28,3 +28,5 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value
   );
+// A helper function to get the image name out of the image url.
+export const getImageNameFromUrl = (url) => url?.split("/").pop();
