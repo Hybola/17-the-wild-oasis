@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { formatCurrency, getImageNameFromUrl } from "../../utils/helpers";
-import { deleteCabin } from "../../services/apiCabins";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { useState } from "react";
+
 import CreateCabinForm from "./CreateCabinForm";
+import { formatCurrency, getImageNameFromUrl } from "../../utils/helpers";
+import { useDeleteCabin } from "./useDeleteCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,19 +45,9 @@ const Discount = styled.div`
 `;
 function CabinRow({ cabin }) {
   const { id, image, name, maxCapacity, regularPrice, discount } = cabin;
+  const { isDeleting, deleteCabin } = useDeleteCabin();
   const imageUrl = getImageNameFromUrl(image); //refer in case of deletion
   const [showForm, setShowForm] = useState(false);
-  const queryClient = useQueryClient();
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: ({ id, imageUrl }) => deleteCabin(id, imageUrl),
-    onSuccess: () => {
-      toast.success("Cabin is successfully deleted");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
 
   return (
     <>
@@ -67,12 +56,16 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button onClick={() => setShowForm((show) => !show)}>Edit</button>
           <button
             disabled={isDeleting}
-            onClick={() => mutate({ id, imageUrl })}>
+            onClick={() => deleteCabin({ id, imageUrl })}>
             Delete
           </button>
         </div>
@@ -81,5 +74,4 @@ function CabinRow({ cabin }) {
     </>
   );
 }
-
 export default CabinRow;
