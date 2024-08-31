@@ -1,5 +1,6 @@
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import { HiMiniXMark } from "react-icons/hi2";
+import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -50,19 +51,67 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
-function Modal({ children, onClose }) {
+//VERSION #1 : REGULAR COMPONENT
+// function Modal({ children, onClose }) {
+//   return createPortal(
+//     <Overlay>
+//       <StyledModal>
+//       <Button onClick={onClose}>
+//         <HiXMark />
+//       </Button>
+//         <div>{children}</div>
+//       </StyledModal>
+//       ;
+//     </Overlay>,
+//     document.body
+//   );
+// }
+
+// VERSION #2 : COMPOUND COMPONENT
+// STEP 1: create context
+const ModalContext = createContext();
+//STEP 2: create parent component
+function Modal({ children }) {
+  const [openName, setOpenName] = useState("");
+  const close = () => setOpenName("");
+  const open = setOpenName;
+  return (
+    <ModalContext.Provider value={{ openName, open, close }}>
+      {children}
+    </ModalContext.Provider>
+  );
+}
+
+//STEP 3: create child components
+function Open({ children, opens: opensWindowName }) {
+  const { open } = useContext(ModalContext);
+  return cloneElement(children, {
+    onClick: () => open(opensWindowName),
+  });
+}
+function Window({ children, name }) {
+  const { openName, close } = useContext(ModalContext);
+  if (openName !== name) return null;
   return createPortal(
     <Overlay>
-      <Button onClick={onClose}>
-        <HiMiniXMark />
-      </Button>
       <StyledModal>
-        <div>{children}</div>
+        <Button onClick={close}>
+          <HiXMark />
+        </Button>
+        <div>
+          {" "}
+          {cloneElement(children, {
+            onCloseModal: close,
+          })}
+        </div>
       </StyledModal>
       ;
     </Overlay>,
     document.body
   );
 }
+//STEP 4: add child components as properties to parent component
+Modal.Open = Open;
+Modal.Window = Window;
 
 export default Modal;
