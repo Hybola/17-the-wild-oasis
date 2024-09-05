@@ -12,7 +12,7 @@ function CabinTable() {
   const [searchParams] = useSearchParams();
   if (isLoading) return <Spinner />;
   if (!cabins.length) return <Empty resourceName="cabins" />;
-  // 1) filter
+  // >>>>> 1) filter
   // To read the filter option (as filterValue) from URL
   const filterValue = searchParams.get("discount") || "all";
   let filteredCabins;
@@ -21,10 +21,11 @@ function CabinTable() {
     filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
   if (filterValue === "with-discount")
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
-  // 2) Sort
+  //>>>>> 2) Sort
   const sortyBy = searchParams.get("sortBy") || "name-asc";
   const [field, direction] = sortyBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
+
   // const sortedCabins = filteredCabins.sort(
   //   (a, b) => (a[field] - b[field]) * modifier
   // );
@@ -34,6 +35,7 @@ function CabinTable() {
       ? a[field].localeCompare(b[field]) * modifier
       : (a[field] - b[field]) * modifier
   );
+
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
