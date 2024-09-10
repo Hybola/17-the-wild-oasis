@@ -40,6 +40,7 @@ function Filter({ filterField, options, searchParamsToReset }) {
 
   function handleClick(value) {
     searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
     searchParamsToReset?.map((param) =>
       searchParams.set(param.name, param.value)
     );
