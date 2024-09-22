@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import { useCabin } from "./useCabins";
+import { useCabins } from "./useCabins";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -27,7 +27,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 function CabinTable() {
-  const { isLoading, cabins, error } = useCabin();
+  const { isLoading, cabins, error } = useCabins();
   if (isLoading) return <Spinner />;
   return (
     <Table role="table">

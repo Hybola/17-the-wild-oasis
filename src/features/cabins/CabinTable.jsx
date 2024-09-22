@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import { useCabin } from "./useCabins";
+import { useCabins } from "./useCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
 import Empty from "../../ui/Empty";
 
 function CabinTable() {
-  const { isLoading, cabins, error } = useCabin();
+  const { isLoading, cabins, error } = useCabins();
   const [searchParams] = useSearchParams();
   if (isLoading) return <Spinner />;
   if (!cabins.length) return <Empty resourceName="cabins" />;
