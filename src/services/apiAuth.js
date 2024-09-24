@@ -16,7 +16,7 @@ export async function login({ email, password }) {
     email,
     password,
   });
-  console.log("login==>>", data);
+  // console.log("login==>>", data);
 
   if (error) throw new Error(error.message);
   return data;

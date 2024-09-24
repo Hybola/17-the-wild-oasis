@@ -84,6 +84,8 @@ function Menus({ children }) {
 function Toggle({ id }) {
   const { openId, open, close, setPosition } = useContext(MenuContext);
   function handleClick(e) {
+    e.stopPropagation();
+    // console.log("click>>>Toggle");
     const rect = e.target.closest("button").getBoundingClientRect();
     openId === "" || openId !== id ? open(id) : close();
     // console.log(rect);
@@ -103,7 +105,11 @@ function List({ id, children }) {
   const { openId, position, close } = useContext(MenuContext);
 
   //if user clicks outside the List, then close the List
-  const { ref } = useOutsideClick(close);
+  const { ref } = useOutsideClick(close, false);
+  // const { ref } = useOutsideClick(() => {
+  //   console.log("Close from click Outside");
+  //   close();
+  // }, false);
 
   if (openId !== id) return null;
   return (
