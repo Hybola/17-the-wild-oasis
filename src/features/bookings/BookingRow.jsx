@@ -11,7 +11,6 @@ import {
   HiArrowDownOnSquare,
   HiArrowUpOnSquare,
   HiEye,
-  HiSquare2Stack,
   HiTrash,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";

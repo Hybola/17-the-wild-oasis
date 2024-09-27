@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
-import { useTodayAcitivity } from "./useTodayActivity";
+import { useTodayActivity } from "./useTodayActivity";
 import Spinner from "../../ui/Spinner";
 import TodayItem from "./TodayItem";
 
@@ -40,7 +40,7 @@ const NoActivity = styled.p`
 `;
 
 function TodayActivity() {
-  const { activities, isLoading } = useTodayAcitivity();
+  const { activities, isLoading } = useTodayActivity();
   return (
     <StyledToday>
       <Row type="horizontal">
