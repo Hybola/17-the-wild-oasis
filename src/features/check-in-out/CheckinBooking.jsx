@@ -7,7 +7,7 @@ import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-import CheckBox from "../../ui/CheckBox";
+import Checkbox from "../../ui/Checkbox";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useCheckin } from "./useCheckin";
@@ -72,7 +72,7 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
       {!hasBreakfast && (
         <Box>
-          <CheckBox
+          <Checkbox
             checked={addBreakfast}
             disabled={isCheckingin}
             onChange={() => {
@@ -82,11 +82,11 @@ function CheckinBooking() {
             id="addBreakfast">
             Want to add breakfast for
             {formatCurrency(optionalBreakPrice)}
-          </CheckBox>
+          </Checkbox>
         </Box>
       )}
       <Box>
-        <CheckBox
+        <Checkbox
           disabled={(isPaid && !addBreakfast) || isCheckingin}
           checked={confirmPaid || (isPaid && !addBreakfast)}
           onChange={() => {
@@ -101,7 +101,7 @@ function CheckinBooking() {
               )}(${formatCurrency(totalPrice)} + ${formatCurrency(
                 optionalBreakPrice
               )})`}
-        </CheckBox>
+        </Checkbox>
       </Box>
       <ButtonGroup>
         <Button
